@@ -15,7 +15,7 @@ class NetWorkUtil
       @ip.split('.').map {|d| "%08d" % Integer(d).to_s(2) }.join("").to_i(2)
     end
     protected :_num
-    def format
+    def align
       @ip.split('.').map {|d| "%3d" % d }.join('.')
     end
   end
@@ -31,5 +31,5 @@ IP_REGEXP=/(?:\d+\.){3}\d+/
 lines = File.read(file).lines.map(&:chomp).grep(IP_REGEXP).
   map     { |e       | vlan, ip  = e.split; [vlan, IPAddress(ip) ] }.
   sort_by { |vlan, ip| [ip, vlan]                                  }.
-  map     { |vlan, ip| "%-10s %s" % [ vlan, ip.format ]            } 
+  map     { |vlan, ip| "%-10s %s" % [ vlan, ip.align ]             } 
 
